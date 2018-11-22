@@ -25,7 +25,9 @@ export class UserComponent implements OnInit{
   ) {
 
   }
-
+  ended(event) {
+    console.log(event);
+  }
   ngOnInit(): void {
     this.route.data.subscribe(routeData => {
       let data = routeData['data'];
