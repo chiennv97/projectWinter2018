@@ -6,6 +6,7 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
 import {Observable} from 'rxjs/Observable';
 import {switchMap} from 'rxjs/operators';
 import {of} from 'rxjs/internal/observable/of';
+import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 
 interface User {
   uid: string;
@@ -18,19 +19,22 @@ interface User {
 @Injectable()
 export class AuthService {
   user: Observable<User>;
+  users$: AngularFireList<any>;
   constructor(
     public afAuth: AngularFireAuth,
     private afs: AngularFirestore,
+    private af: AngularFireDatabase
   ) {
-    this.user = this.afAuth.authState.pipe(
-      switchMap(user => {
-        if (user) {
-          return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
-        } else {
-          return of(null);
-        }
-      })
-    );
+    // this.user = this.afAuth.authState.pipe(
+    //   switchMap(user => {
+    //     if (user) {
+    //       return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
+    //     } else {
+    //       return of(null);
+    //     }
+    //   })
+    // );
+    this.users$ = this.af.list('/users');
   }
 
   doFacebookLogin(){
@@ -46,7 +50,6 @@ export class AuthService {
         })
     })
   }
-
   doTwitterLogin(){
     return new Promise<any>((resolve, reject) => {
       let provider = new firebase.auth.TwitterAuthProvider();
@@ -69,19 +72,20 @@ export class AuthService {
       this.afAuth.auth
         .signInWithPopup(provider)
         .then(res => {
-          const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${res.user.uid}`);
+          // const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${res.user.uid}`);
           const data: User = {
             uid: res.user.uid,
             email: res.user.email,
             displayName: res.user.displayName,
             photoURL: res.user.photoURL
           };
-          userRef.set(data, { merge: true });
+          // userRef.set(data, { merge: true });
+          this.users$.push(data);
           resolve(res);
         }, err => {
           console.log(err);
           reject(err);
-        })
+        });
     })
   }
 
