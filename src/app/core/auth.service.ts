@@ -34,7 +34,7 @@ export class AuthService {
     //     }
     //   })
     // );
-    this.users$ = this.af.list('/users');
+    // this.users$ = this.af.list('/users');
   }
 
   doFacebookLogin(){
@@ -80,7 +80,8 @@ export class AuthService {
             photoURL: res.user.photoURL
           };
           // userRef.set(data, { merge: true });
-          this.users$.push(data);
+          this.users$ = this.af.list('/users');
+          this.users$.update(res.user.uid, data);
           resolve(res);
         }, err => {
           console.log(err);
