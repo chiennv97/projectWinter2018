@@ -20,6 +20,7 @@ import {UserService} from './core/user.service';
 import {UserResolver} from './user/user.resolver';
 import {AuthGuard} from './core/auth.guard';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
+import {OverlayModule} from '@angular/cdk/overlay';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    OverlayModule
   ],
   providers: [AuthService, UserService, UserResolver, AuthGuard],
   bootstrap: [AppComponent]
