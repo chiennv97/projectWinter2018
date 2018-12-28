@@ -15,6 +15,8 @@ export class UserComponent implements OnInit{
 
   user: FirebaseUserModel = new FirebaseUserModel();
   profileForm: FormGroup;
+  text = '';
+  file;
 
   constructor(
     public userService: UserService,
@@ -25,9 +27,6 @@ export class UserComponent implements OnInit{
   ) {
 
   }
-  ended(event) {
-    console.log(event);
-  }
   ngOnInit(): void {
     this.route.data.subscribe(routeData => {
       let data = routeData['data'];
@@ -37,7 +36,12 @@ export class UserComponent implements OnInit{
       }
     })
   }
-
+  onSubmit(formFile) {
+    console.log(formFile);
+  }
+  logEvent(event) {
+    console.log(event);
+  }
   createForm(name) {
     this.profileForm = this.fb.group({
       name: [name, Validators.required ]

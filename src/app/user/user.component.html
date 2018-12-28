@@ -1,28 +1,59 @@
-<div class="container">
-  <div class="row">
-    <div class="col-md-4 col-md-offset-4">
-      <div class="card" style="width: 20rem;">
-        <img class="card-img-top image" [src]="user.image" alt="Card image cap">
-        <div *ngIf='user.provider != "password"'class="card-body">
-          <h4 class="card-title">{{user.name}}</h4>
-          <p class="card-text">This is an example of Social Authentication using Firebase in an Angular 5 web app. </p>
-        </div>
-        <div *ngIf='user.provider == "password"'class="card-body">
-          <form [formGroup]="profileForm">
-            <div class="form-group">
-              <label>Your name</label>
-              <input type="text" formControlName="name" class="form-control" required>
+
+<header class="default-header" style="background-color: black">
+  <nav class="navbar navbar-expand-lg  navbar-light">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <img src="../../assets/img/logo.png" alt="" />
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="lnr lnr-menu"></span>
+      </button>
+
+      <div class="collapse navbar-collapse justify-content-end align-items-center" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="courses.html">Courses</a></li>
+          <!-- Dropdown -->
+          <li class="dropdown">
+            <a class="dropdown-toggle" href="#" data-toggle="dropdown">
+              Pages
+            </a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="elements.html">Elements</a>
+              <a class="dropdown-item" href="course-details.html">Course Details</a>
             </div>
-          </form>
-          <a (click)="save(profileForm.value)" class="btn btn-primary">Save</a>
-        </div>
+          </li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" href="#" data-toggle="dropdown">
+              Blog
+            </a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="blog-home.html">Blog Home</a>
+              <a class="dropdown-item" href="blog-single.html">Blog Details</a>
+            </div>
+          </li>
+          <li><a (click)="logout()" style="color: white; cursor: pointer">Logout</a></li>
+          <li>
+            <!--<button class="search">-->
+              <!--<span class="lnr lnr-magnifier" id="search"></span>-->
+            <!--</button>-->
+
+          </li>
+          <li>
+            <a style="color: white">{{user.name}}</a>
+            <img class="card-img-top image" [src]="user.image" alt="Card image cap" style="width: 28px; height: 28px; border-radius: 50%;">
+          </li>
+        </ul>
       </div>
     </div>
-    <div class="col-md-4">
-      <button type="button" (click)="logout()" class="btn btn-link">Logout</button>
-    </div>
-  </div>
-</div>
-<div class="example-box" cdkDrag (cdkDragEnded)="ended($event)">
-  Drag me around
-</div>
+  </nav>
+</header>
+
+<form (submit)="onSubmit(formFile)" #formFile="ngForm" style="padding-top: 100px">
+  <input type="file" (change)="logEvent($event)" placeholder="Text" [(ngModel)]="file" name="file">
+  <input type="text" class="form-control" placeholder="Text" aria-label="Text" aria-describedby="basic-addon1" [(ngModel)]="text" name="text">
+  <button class="btn btn-outline-dark">Dark</button>
+</form>
+

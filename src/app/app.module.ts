@@ -10,7 +10,7 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { environment } from '../environments/environment';
 import { rootRouterConfig } from './app.routes';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import {LoginComponent} from './login/login.component';
 import {UserComponent} from './user/user.component';
@@ -21,13 +21,15 @@ import {UserResolver} from './user/user.resolver';
 import {AuthGuard} from './core/auth.guard';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import {OverlayModule} from '@angular/cdk/overlay';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     UserComponent,
-    RegisterComponent
+    RegisterComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +42,9 @@ import {OverlayModule} from '@angular/cdk/overlay';
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
     AngularFireDatabaseModule,
-    OverlayModule
+    OverlayModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [AuthService, UserService, UserResolver, AuthGuard],
   bootstrap: [AppComponent]
