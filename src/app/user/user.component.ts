@@ -11,36 +11,40 @@ import { FirebaseUserModel } from '../core/user.model';
   templateUrl: 'user.component.html',
   styleUrls: ['user.css']
 })
-export class UserComponent implements OnInit{
+export class UserComponent {
 
   user: FirebaseUserModel = new FirebaseUserModel();
   profileForm: FormGroup;
   text = '';
   file;
+  name = '';
+  page;
 
   constructor(
     public userService: UserService,
     public authService: AuthService,
     private route: ActivatedRoute,
-    private location : Location,
+    private location: Location,
     private fb: FormBuilder
   ) {
 
-  }
-  ngOnInit(): void {
-    this.route.data.subscribe(routeData => {
-      let data = routeData['data'];
-      if (data) {
-        this.user = data;
-        this.createForm(this.user.name);
-      }
-    })
   }
   onSubmit(formFile) {
     console.log(formFile);
   }
   logEvent(event) {
     console.log(event);
+    this.name = event.target.files[0].name;
+    console.log(this.name);
+    const reader = new FileReader();
+    reader.readAsBinaryString(event.target.files[0]);
+    const seft = this;
+    reader.onloadend = function() {
+      const count = reader.result.match(/\/Type[\s]*\/Page[^s]/g).length;
+      seft.page = count;
+    };
+    // this.page = reader.onloadend;
+    // console.log(reader.onloadend);
   }
   createForm(name) {
     this.profileForm = this.fb.group({
@@ -48,19 +52,19 @@ export class UserComponent implements OnInit{
     });
   }
 
-  save(value){
+  save(value) {
     this.userService.updateCurrentUser(value)
     .then(res => {
       console.log(res);
-    }, err => console.log(err))
+    }, err => console.log(err));
   }
 
-  logout(){
+  logout() {
     this.authService.doLogout()
     .then((res) => {
       this.location.back();
     }, (error) => {
-      console.log("Logout error", error);
+      console.log('Logout error', error);
     });
   }
 }
