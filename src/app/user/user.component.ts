@@ -19,6 +19,7 @@ export class UserComponent {
   file;
   name = '';
   page;
+  price = 100;
 
   constructor(
     public userService: UserService,

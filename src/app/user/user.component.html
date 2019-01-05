@@ -52,6 +52,7 @@
 </header>
 <div style="padding-top: 100px">
   <h4>In Sách</h4>
+  <div>Giá tiền: {{price}} VNĐ / (1 trang giấy)</div>
   <input type="file" name="file" id="file" class="inputfile" (change)="logEvent($event)" [(ngModel)]="file" data-multiple-caption="{count} files selected" multiple/>
   <label for="file" style="padding: 7px;">
     <img src="../../assets/img/icons8-upload-26.png" alt="" style="width: 20px;">
@@ -66,7 +67,11 @@
       <div>Tên: {{name}}</div>
       <div>Số trang: {{page}}</div>
       <!--<input type="file" (change)="logEvent($event)" [(ngModel)]="file" name="file">-->
-      <input type="text" class="form-control" placeholder="Text" aria-label="Text" aria-describedby="basic-addon1" [(ngModel)]="text" name="text">
+      <div class="row">
+        <div class="col-sm-2">Số bản in:</div>
+        <div class="col-sm-4"><input type="text" class="form-control" placeholder="Text" aria-label="Text" aria-describedby="basic-addon1" [(ngModel)]="text" name="text"></div>
+      </div>
+      <div *ngIf="page!==undefined">Tiền: {{page}} x {{price}} = {{page*price | number}} VNĐ</div>
       <button class="btn btn-outline-dark">Dark</button>
     </form>
   </div>
