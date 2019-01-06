@@ -56,13 +56,12 @@ export class UserComponent {
     console.log(this.user);
     const reader = new FileReader();
     reader.readAsBinaryString(event.target.files[0]);
-    const seft = this;
-    reader.onloadend = function() {
-      const count = reader.result.match(/\/Type[\s]*\/Page[^s]/g).length;
-      seft.page = count;
-    };
-    // this.page = reader.onloadend;
-    // console.log(reader.onloadend);
+    // comment when run
+    // const seft = this;
+    // reader.onloadend = function() {
+    //   const count = reader.result.match(/\/Type[\s]*\/Page[^s]/g).length;
+    //   seft.page = count;
+    // };
   }
   createForm(name) {
     this.profileForm = this.fb.group({
