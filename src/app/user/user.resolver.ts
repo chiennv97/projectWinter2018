@@ -20,8 +20,8 @@ export class UserResolver implements Resolve<FirebaseUserModel> {
           user.name = res.displayName;
           user.provider = res.providerData[0].providerId;
           return resolve(user);
-        }
-        else{
+        } else {
+          console.log(user);
           user.image = res.photoURL;
           user.name = res.displayName;
           user.provider = res.providerData[0].providerId;
@@ -30,7 +30,7 @@ export class UserResolver implements Resolve<FirebaseUserModel> {
       }, err => {
         this.router.navigate(['/login']);
         return reject(err);
-      })
-    })
+      });
+    });
   }
 }

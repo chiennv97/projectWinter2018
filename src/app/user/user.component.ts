@@ -15,7 +15,7 @@ export class UserComponent {
 
   user: FirebaseUserModel = new FirebaseUserModel();
   profileForm: FormGroup;
-  text = '';
+  numberOfPrint = 1;
   file;
   name = '';
   page;
@@ -28,15 +28,32 @@ export class UserComponent {
     private location: Location,
     private fb: FormBuilder
   ) {
-
+    this.userService.getCurrentUser()
+      .then(res => {
+        if (res.providerData[0].providerId === 'password') {
+          this.user.image = 'http://dsi-vd.github.io/patternlab-vd/images/fpo_avatar.png';
+          this.user.name = res.displayName;
+          this.user.provider = res.providerData[0].providerId;
+        } else {
+          // console.log(user);
+          this.user.image = res.photoURL;
+          this.user.name = res.displayName;
+          this.user.provider = res.providerData[0].providerId;
+        }
+      }, err => {
+        // this.router.navigate(['/login']);
+      });
   }
   onSubmit(formFile) {
     console.log(formFile);
   }
+  logNumberOfPrint(){
+    console.log(this.numberOfPrint);
+  }
   logEvent(event) {
     console.log(event);
     this.name = event.target.files[0].name;
-    console.log(this.name);
+    console.log(this.user);
     const reader = new FileReader();
     reader.readAsBinaryString(event.target.files[0]);
     const seft = this;

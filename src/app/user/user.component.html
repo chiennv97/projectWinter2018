@@ -69,11 +69,12 @@
       <!--<input type="file" (change)="logEvent($event)" [(ngModel)]="file" name="file">-->
       <div class="row">
         <div class="col-sm-2">Số bản in:</div>
-        <div class="col-sm-4"><input type="text" class="form-control" placeholder="Text" aria-label="Text" aria-describedby="basic-addon1" [(ngModel)]="text" name="text"></div>
+        <div class="col-sm-4"><input type="numberOfPrint" class="form-control" placeholder="numberOfPrint" aria-label="numberOfPrint" aria-describedby="basic-addon1" [(ngModel)]="numberOfPrint" name="numberOfPrint"></div>
       </div>
-      <div *ngIf="page!==undefined">Tiền: {{page}} x {{price}} = {{page*price | number}} VNĐ</div>
+      <div *ngIf="page!==undefined && numberOfPrint !== ''">Tiền: {{page}} x {{numberOfPrint}} x {{price}} = {{page*price*numberOfPrint | number}} VNĐ</div>
       <button class="btn btn-outline-dark">Dark</button>
     </form>
+    <button class="btn btn-outline-dark" (click)="logNumberOfPrint()">Dark</button>
   </div>
   <div class="col-sm-6" style="background-color:orange;">50%</div>
 </div>
