@@ -8,7 +8,7 @@ import { FirebaseUserModel } from '../core/user.model';
 
 @Component({
   selector: 'page-user',
-  templateUrl: 'user.component.html',
+  templateUrl: 'order.component.html',
   styleUrls: ['user.css']
 })
 export class UserComponent {
@@ -35,7 +35,7 @@ export class UserComponent {
           this.user.name = res.displayName;
           this.user.provider = res.providerData[0].providerId;
         } else {
-          // console.log(user);
+          // console.log(order);
           this.user.image = res.photoURL;
           this.user.name = res.displayName;
           this.user.provider = res.providerData[0].providerId;
