@@ -23,6 +23,8 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import {OverlayModule} from '@angular/cdk/overlay';
 import { HomeComponent } from './home/home.component';
 import {UserIdService} from './core/userId.service';
+import { FileSizePipe } from './pipe/file-size.pipe';
+import { AngularFireStorageModule } from 'angularfire2/storage';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,8 @@ import {UserIdService} from './core/userId.service';
     LoginComponent,
     OrderComponent,
     RegisterComponent,
-    HomeComponent
+    HomeComponent,
+    FileSizePipe
   ],
   imports: [
     BrowserModule,
@@ -44,6 +47,7 @@ import {UserIdService} from './core/userId.service';
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
     AngularFireDatabaseModule,
     OverlayModule,
+    AngularFireStorageModule,
     FormsModule,
     ReactiveFormsModule,
   ],

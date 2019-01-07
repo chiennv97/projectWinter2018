@@ -8,6 +8,8 @@ import { FirebaseUserModel } from '../core/user.model';
 import { AngularFireDatabase, AngularFireObject, AngularFireList } from '@angular/fire/database';
 import { Observable } from 'rxjs';
 import {UserIdService} from '../core/userId.service';
+import { AngularFireStorage, AngularFireUploadTask } from 'angularfire2/storage';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'page-user',
@@ -30,6 +32,23 @@ export class OrderComponent {
   currentUser: Observable<any>;
   users$: AngularFireList<any>;
 
+  task: AngularFireUploadTask;
+  taskCover: AngularFireUploadTask;
+
+  // Progress monitoring
+  percentage: Observable<number>;
+  percentageCover: Observable<number>;
+
+  snapshot: Observable<any>;
+  snapshotCover: Observable<any>;
+
+  // Download URL
+  downloadURL: Observable<string>;
+  downloadURLCover: Observable<string>;
+
+  // State for dropzone CSS toggling
+  isHovering: boolean;
+
   constructor(
     public userService: UserService,
     public authService: AuthService,
@@ -37,7 +56,8 @@ export class OrderComponent {
     private location: Location,
     private fb: FormBuilder,
     public db: AngularFireDatabase,
-    public userIdService: UserIdService
+    public userIdService: UserIdService,
+    private storage: AngularFireStorage
   ) {
     this.userService.getCurrentUser()
       .then(res => {
@@ -72,18 +92,19 @@ export class OrderComponent {
   logNumberOfPrint() {
     console.log(this.numberOfPrint);
   }
-  logEvent(event) {
+  chooseFile(event) {
     console.log(event);
     this.name = event.target.files[0].name;
     console.log(this.user);
     const reader = new FileReader();
     reader.readAsBinaryString(event.target.files[0]);
     // comment when run
-    // const seft = this;
-    // reader.onloadend = function() {
-    //   const count = reader.result.match(/\/Type[\s]*\/Page[^s]/g).length;
-    //   seft.page = count;
-    // };
+    const seft = this;
+    reader.onloadend = function() {
+      const count = reader.result.match(/\/Type[\s]*\/Page[^s]/g).length;
+      seft.page = count;
+    };
+    this.startUpload(event.target.files);
   }
   createForm(name) {
     this.profileForm = this.fb.group({
@@ -114,5 +135,78 @@ export class OrderComponent {
     });
     // this.users$.remove(this.userIdService.getUserId());
     // this.authService.updateCustomerAddress(this.userIdService.getUserId(), this.customerName, this.numberPhone, this.address);
+  }
+
+  toggleHover(event: boolean) {
+    this.isHovering = event;
+  }
+
+
+  startUpload(event: FileList) {
+    // The File object
+    const file = event.item(0)
+
+    // Client-side validation example
+    // if (file.type.split('/')[0] !== 'image') {
+    //   console.error('unsupported file type :( ')
+    //   return;
+    // }
+
+    // The storage path
+    const path = `test/${new Date().getTime()}_${file.name}`;
+
+    // Totally optional metadata
+    const customMetadata = { app: 'My AngularFire-powered PWA!' };
+
+    // The main task
+    this.task = this.storage.upload(path, file, { customMetadata });
+    const fileRef = this.storage.ref(path);
+
+    // Progress monitoring
+    this.percentage = this.task.percentageChanges();
+    this.snapshot   = this.task.snapshotChanges();
+
+    // The file's download URL
+    // this.downloadURL = this.task.downloadURL();
+    this.task.snapshotChanges().pipe(
+      finalize(() => this.downloadURL = fileRef.getDownloadURL() )
+    )
+      .subscribe();
+  }
+
+  startUploadCover(event: FileList) {
+    // The File object
+    const file = event.item(0)
+
+    // Client-side validation example
+    // if (file.type.split('/')[0] !== 'image') {
+    //   console.error('unsupported file type :( ')
+    //   return;
+    // }
+
+    // The storage path
+    const path = `cover/${new Date().getTime()}_${file.name}`;
+
+    // Totally optional metadata
+    const customMetadata = { app: 'My AngularFire-powered PWA!' };
+
+    // The main task
+    this.taskCover = this.storage.upload(path, file, { customMetadata });
+    const fileRef = this.storage.ref(path);
+
+    // Progress monitoring
+    this.percentageCover = this.taskCover.percentageChanges();
+    this.snapshotCover   = this.taskCover.snapshotChanges();
+
+    // The file's download URL
+    // this.downloadURL = this.task.downloadURL();
+    this.taskCover.snapshotChanges().pipe(
+      finalize(() => this.downloadURLCover = fileRef.getDownloadURL() )
+    )
+      .subscribe();
+  }
+  // Determines if the upload task is active
+  isActive(snapshot) {
+    return snapshot.state === 'running' && snapshot.bytesTransferred < snapshot.totalBytes
   }
 }
