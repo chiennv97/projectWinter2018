@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
   tryGoogleLogin() {
     this.authService.doGoogleLogin()
       .then(res =>{
-          this.router.navigate(['/user']);
+          this.router.navigate(['/order']);
         }, err => console.log(err)
       );
   }

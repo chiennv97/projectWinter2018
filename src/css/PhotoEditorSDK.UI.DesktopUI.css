@@ -7,7 +7,7 @@
  *
  * Redistribution and use in source and binary forms, without
  * modification, are permitted provided that the following license agreement
- * is approved and a legal/financial contract was signed by the user.
+ * is approved and a legal/financial contract was signed by the order.
  * The license agreement can be found under following link:
  *
  * https://www.photoeditorsdk.com/LICENSE.txt
@@ -2263,7 +2263,7 @@
         transform: translateY(0);
       }
     }
-  
+
 
 .pesdk-desktop-editor .pesdk-ControlItem-gxhkr8__ListItem-prcvvt {
   transition: color 0.3s ease-out;

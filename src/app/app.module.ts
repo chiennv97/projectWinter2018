@@ -13,21 +13,22 @@ import { rootRouterConfig } from './app.routes';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import {LoginComponent} from './login/login.component';
-import {UserComponent} from './user/user.component';
+import {OrderComponent} from './order/order.component';
 import {RegisterComponent} from './register/register.component';
 import {AuthService} from './core/auth.service';
 import {UserService} from './core/user.service';
-import {UserResolver} from './user/user.resolver';
+import {UserResolver} from './order/user.resolver';
 import {AuthGuard} from './core/auth.guard';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import {OverlayModule} from '@angular/cdk/overlay';
 import { HomeComponent } from './home/home.component';
+import {UserIdService} from './core/userId.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    UserComponent,
+    OrderComponent,
     RegisterComponent,
     HomeComponent
   ],
@@ -46,7 +47,7 @@ import { HomeComponent } from './home/home.component';
     FormsModule,
     ReactiveFormsModule,
   ],
-  providers: [AuthService, UserService, UserResolver, AuthGuard],
+  providers: [AuthService, UserService, UserResolver, AuthGuard, UserIdService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

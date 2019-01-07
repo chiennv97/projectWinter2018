@@ -76,5 +76,28 @@
     </form>
     <button class="btn btn-outline-dark" (click)="logNumberOfPrint()">Dark</button>
   </div>
-  <div class="col-sm-6" style="background-color:orange;">50%</div>
+  <div class="col-sm-6">
+    <div>Thiết kế ảnh bìa</div>
+  </div>
 </div>
+
+<div>
+  <h4>Thông Tin Giao Hàng:</h4>
+  <button class="btn btn-outline-dark" (click)="updateCustomerAddress()">Cập Nhật</button>
+  <div class="row">
+    <div class="col-sm-2">Họ Tên</div>
+    <div class="col-sm-4"><input type="customerName" class="form-control" placeholder="Nhập Họ và Tên" aria-label="customerName" aria-describedby="basic-addon1" [(ngModel)]="customerName" name="customerName"></div>
+  </div>
+  <div class="row">
+    <div class="col-sm-2">Số Điện Thoại</div>
+    <div class="col-sm-4"><input type="numberPhone" class="form-control" placeholder="Nhập số điện thoại" aria-label="numberPhone" aria-describedby="basic-addon1" [(ngModel)]="numberPhone" name="numberPhone"></div>
+  </div>
+  <div class="row">
+    <div class="col-sm-2">Địa Chỉ Giao Hàng</div>
+    <div class="col-sm-4"><input type="address" class="form-control" placeholder="Nhập địa chỉ giao hàng" aria-label="address" aria-describedby="basic-addon1" [(ngModel)]="address" name="address"></div>
+  </div>
+</div>
+<div>Tổng Tiền: </div>
+<div>Dự kiến giao hàng trong</div>
+<button class="btn btn-outline-dark">Đặt Hàng</button>
+<!--<h1>{{ (customers | async)?.email }}</h1>-->

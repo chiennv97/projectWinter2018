@@ -31,28 +31,28 @@ export class LoginComponent {
   // tryFacebookLogin(){
   //   this.authService.doFacebookLogin()
   //   .then(res => {
-  //     this.router.navigate(['/user']);
+  //     this.router.navigate(['/order']);
   //   })
   // }
   //
   // tryTwitterLogin(){
   //   this.authService.doTwitterLogin()
   //   .then(res => {
-  //     this.router.navigate(['/user']);
+  //     this.router.navigate(['/order']);
   //   })
   // }
   //
   // tryGoogleLogin(){
   //   this.authService.doGoogleLogin()
   //   .then(res => {
-  //     this.router.navigate(['/user']);
+  //     this.router.navigate(['/order']);
   //   })
   // }
   //
   // tryLogin(value){
   //   this.authService.doLogin(value)
   //   .then(res => {
-  //     this.router.navigate(['/user']);
+  //     this.router.navigate(['/order']);
   //   }, err => {
   //     console.log(err);
   //     this.errorMessage = err.message;

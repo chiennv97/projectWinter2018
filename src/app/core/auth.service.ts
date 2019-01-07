@@ -7,13 +7,16 @@ import {Observable} from 'rxjs/Observable';
 import {switchMap} from 'rxjs/operators';
 import {of} from 'rxjs/internal/observable/of';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
+import {UserIdService} from './userId.service';
 
 interface User {
   uid: string;
   email: string;
   photoURL?: string;
   displayName?: string;
-  favoriteColor?: string;
+  customerName?: string;
+  numberPhone?: string;
+  address?: string;
 }
 
 @Injectable()
@@ -23,12 +26,13 @@ export class AuthService {
   constructor(
     public afAuth: AngularFireAuth,
     private afs: AngularFirestore,
-    private af: AngularFireDatabase
+    private af: AngularFireDatabase,
+    public userid: UserIdService
   ) {
-    // this.user = this.afAuth.authState.pipe(
-    //   switchMap(user => {
-    //     if (user) {
-    //       return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
+    // this.order = this.afAuth.authState.pipe(
+    //   switchMap(order => {
+    //     if (order) {
+    //       return this.afs.doc<User>(`users/${order.uid}`).valueChanges();
     //     } else {
     //       return of(null);
     //     }
@@ -72,16 +76,42 @@ export class AuthService {
       this.afAuth.auth
         .signInWithPopup(provider)
         .then(res => {
-          // const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${res.user.uid}`);
-          const data: User = {
-            uid: res.user.uid,
-            email: res.user.email,
-            displayName: res.user.displayName,
-            photoURL: res.user.photoURL
-          };
+          // const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${res.order.uid}`);
           // userRef.set(data, { merge: true });
           this.users$ = this.af.list('/users');
-          this.users$.update(res.user.uid, data);
+          // this.users$.update(res.user.uid, data);
+          this.users$.snapshotChanges()
+            .subscribe(actions => {
+              var didLogin = 0;
+              actions.forEach(action => {
+                console.log(action.key);
+                if (action.key === res.user.uid) {
+                  didLogin = 1;
+                  console.log(didLogin);
+                }
+              });
+              if (didLogin === 1) {
+                const data: User = {
+                  uid: res.user.uid,
+                  email: res.user.email,
+                  displayName: res.user.displayName,
+                  photoURL: res.user.photoURL,
+                };
+                this.users$.update(res.user.uid, data);
+              } else {
+                const data: User = {
+                  uid: res.user.uid,
+                  email: res.user.email,
+                  displayName: res.user.displayName,
+                  photoURL: res.user.photoURL,
+                  customerName: '',
+                  numberPhone: '',
+                  address: ''
+                };
+                this.users$.update(res.user.uid, data);
+              }
+            });
+          this.userid.setUserId(res.user.uid);
           resolve(res);
         }, err => {
           console.log(err);
@@ -119,6 +149,12 @@ export class AuthService {
       }
     });
   }
-
-
+  updateCustomerAddress(id, customerName, numberPhone, address) {
+    this.users$ = this.af.list('/users');
+    this.users$.update(id, {
+      customerName: customerName,
+      numberPhone: numberPhone,
+      address: address
+    });
+  }
 }

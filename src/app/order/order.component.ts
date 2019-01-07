@@ -5,13 +5,16 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FirebaseUserModel } from '../core/user.model';
+import { AngularFireDatabase, AngularFireObject, AngularFireList } from '@angular/fire/database';
+import { Observable } from 'rxjs';
+import {UserIdService} from '../core/userId.service';
 
 @Component({
   selector: 'page-user',
   templateUrl: 'order.component.html',
-  styleUrls: ['user.css']
+  styleUrls: ['order.css']
 })
-export class UserComponent {
+export class OrderComponent {
 
   user: FirebaseUserModel = new FirebaseUserModel();
   profileForm: FormGroup;
@@ -20,13 +23,21 @@ export class UserComponent {
   name = '';
   page;
   price = 100;
+  customerName = '';
+  numberPhone = '';
+  address = '';
+  customers: AngularFireObject<any>;
+  currentUser: Observable<any>;
+  users$: AngularFireList<any>;
 
   constructor(
     public userService: UserService,
     public authService: AuthService,
     private route: ActivatedRoute,
     private location: Location,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    public db: AngularFireDatabase,
+    public userIdService: UserIdService
   ) {
     this.userService.getCurrentUser()
       .then(res => {
@@ -43,11 +54,22 @@ export class UserComponent {
       }, err => {
         // this.router.navigate(['/login']);
       });
+    console.log(this.userIdService.getUserId());
+    this.customers = this.db.object('users/' + this.userIdService.getUserId());
+    this.customers.snapshotChanges().subscribe(action => {
+      console.log(action.payload.val());
+      this.customerName = action.payload.val().customerName;
+      this.numberPhone = action.payload.val().numberPhone;
+      this.address = action.payload.val().address;
+    });
+    this.users$ = this.db.list('/users');
+    // this.currentUser = this.customers.object('lCot8XRm2jNCYchutulTYL7ANIq2').valueChanges();
+
   }
   onSubmit(formFile) {
     console.log(formFile);
   }
-  logNumberOfPrint(){
+  logNumberOfPrint() {
     console.log(this.numberOfPrint);
   }
   logEvent(event) {
@@ -83,5 +105,14 @@ export class UserComponent {
     }, (error) => {
       console.log('Logout error', error);
     });
+  }
+  updateCustomerAddress() {
+    this.customers.update({
+      customerName: this.customerName,
+      numberPhone: this.numberPhone,
+      address: this.address
+    });
+    // this.users$.remove(this.userIdService.getUserId());
+    // this.authService.updateCustomerAddress(this.userIdService.getUserId(), this.customerName, this.numberPhone, this.address);
   }
 }
