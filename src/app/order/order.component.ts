@@ -31,6 +31,8 @@ export class OrderComponent {
   customers: AngularFireObject<any>;
   currentUser: Observable<any>;
   users$: AngularFireList<any>;
+  orders$: AngularFireList<any>;
+  event;
 
   task: AngularFireUploadTask;
   taskCover: AngularFireUploadTask;
@@ -74,8 +76,8 @@ export class OrderComponent {
       }, err => {
         // this.router.navigate(['/login']);
       });
-    console.log(this.userIdService.getUserId());
-    this.customers = this.db.object('users/' + this.userIdService.getUserId());
+    console.log(this.getUserId());
+    this.customers = this.db.object('users/' + this.getUserId());
     this.customers.snapshotChanges().subscribe(action => {
       console.log(action.payload.val());
       this.customerName = action.payload.val().customerName;
@@ -83,6 +85,7 @@ export class OrderComponent {
       this.address = action.payload.val().address;
     });
     this.users$ = this.db.list('/users');
+    this.orders$ = this.db.list('/orders/' + this.getUserId());
     // this.currentUser = this.customers.object('lCot8XRm2jNCYchutulTYL7ANIq2').valueChanges();
 
   }
@@ -94,6 +97,7 @@ export class OrderComponent {
   }
   chooseFile(event) {
     console.log(event);
+    this.event = event;
     this.name = event.target.files[0].name;
     console.log(this.user);
     const reader = new FileReader();
@@ -104,7 +108,7 @@ export class OrderComponent {
       const count = reader.result.match(/\/Type[\s]*\/Page[^s]/g).length;
       seft.page = count;
     };
-    this.startUpload(event.target.files);
+    // this.startUpload(event.target.files);
   }
   createForm(name) {
     this.profileForm = this.fb.group({
@@ -146,12 +150,6 @@ export class OrderComponent {
     // The File object
     const file = event.item(0)
 
-    // Client-side validation example
-    // if (file.type.split('/')[0] !== 'image') {
-    //   console.error('unsupported file type :( ')
-    //   return;
-    // }
-
     // The storage path
     const path = `test/${new Date().getTime()}_${file.name}`;
 
@@ -169,7 +167,27 @@ export class OrderComponent {
     // The file's download URL
     // this.downloadURL = this.task.downloadURL();
     this.task.snapshotChanges().pipe(
-      finalize(() => this.downloadURL = fileRef.getDownloadURL() )
+      finalize(() => {
+        this.downloadURL = fileRef.getDownloadURL();
+        const timeCreate = new Date().getTime();
+        this.downloadURL.subscribe(url => {
+          this.orders$.update(timeCreate.toString(), {
+            name: this.name,
+            numberOfPrint: this.numberOfPrint,
+            page: this.page,
+            docurl: url,
+            coverurl: url,
+            price: this.price,
+            timeUpload: timeCreate,
+            timeFinish: timeCreate + 86400,
+            customerName: this.customerName,
+            numberPhone: this.numberPhone,
+            address: this.address,
+            status: 'wait'
+          });
+          console.log('cap nhat thanh cong');
+        });
+      })
     )
       .subscribe();
   }
@@ -207,6 +225,14 @@ export class OrderComponent {
   }
   // Determines if the upload task is active
   isActive(snapshot) {
-    return snapshot.state === 'running' && snapshot.bytesTransferred < snapshot.totalBytes
+    return snapshot.state === 'running' && snapshot.bytesTransferred < snapshot.totalBytes;
+  }
+
+  orderPrint() {
+    this.startUpload(this.event.target.files);
+    // console.log(this.getUserId());
+  }
+  getUserId() {
+    return localStorage.getItem('currentUserID');
   }
 }

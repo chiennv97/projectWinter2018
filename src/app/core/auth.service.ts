@@ -112,6 +112,7 @@ export class AuthService {
               }
             });
           this.userid.setUserId(res.user.uid);
+          localStorage.setItem('currentUserID', res.user.uid);
           resolve(res);
         }, err => {
           console.log(err);
