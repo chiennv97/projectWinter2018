@@ -1,9 +1,8 @@
-
 <header class="default-header" style="background-color: black">
   <nav class="navbar navbar-expand-lg  navbar-light">
     <div class="container">
       <a class="navbar-brand" href="index.html">
-        <img src="../../assets/img/logo.png" alt="" />
+        <img src="../../assets/img/logo.png" alt=""/>
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
               aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,13 +36,14 @@
           <li><a (click)="logout()" style="color: white; cursor: pointer">Logout</a></li>
           <li>
             <!--<button class="search">-->
-              <!--<span class="lnr lnr-magnifier" id="search"></span>-->
+            <!--<span class="lnr lnr-magnifier" id="search"></span>-->
             <!--</button>-->
 
           </li>
           <li>
             <a style="color: white">{{user.name}}</a>
-            <img class="card-img-top image" [src]="user.image" alt="Card image cap" style="width: 28px; height: 28px; border-radius: 50%;">
+            <img class="card-img-top image" [src]="user.image" alt="Card image cap"
+                 style="width: 28px; height: 28px; border-radius: 50%;">
           </li>
         </ul>
       </div>
@@ -60,112 +60,30 @@
   </label>
 </div>
 
-<!--<div class="row">-->
-  <!--<div class="col-sm-6">-->
 
-    <!--<form (submit)="onSubmit(formFile)" #formFile="ngForm">-->
-      <!--<div>Tên: {{name}}</div>-->
-      <!--<div>Số trang: {{page}}</div>-->
-      <!--&lt;!&ndash;<input type="file" (change)="logEvent($event)" [(ngModel)]="file" name="file">&ndash;&gt;-->
-      <!--<div class="row">-->
-        <!--<div class="col-sm-2">Số bản in:</div>-->
-        <!--<div class="col-sm-4"><input type="numberOfPrint" class="form-control" placeholder="numberOfPrint" aria-label="numberOfPrint" aria-describedby="basic-addon1" [(ngModel)]="numberOfPrint" name="numberOfPrint"></div>-->
-      <!--</div>-->
-      <!--<div *ngIf="page!==undefined && numberOfPrint !== ''">Tiền: {{page}} x {{numberOfPrint}} x {{price}} = {{page*price*numberOfPrint | number}} VNĐ</div>-->
-      <!--<div *ngIf="percentage | async as pct">-->
-        <!--<span>-->
-          <!--<progress class="progress is-info"-->
-                    <!--[value]="pct"-->
-                    <!--max="100">-->
-        <!--</progress>-->
-        <!--</span>-->
-        <!--<span>-->
-          <!--{{ pct | number }}%-->
-        <!--</span>-->
-      <!--</div>-->
-      <!--<div *ngIf="snapshot | async as snap">-->
-        <!--<div *ngIf="downloadURL | async as url">-->
-          <!--<div>link: {{url | slice:0:50}}...</div>-->
-        <!--</div>-->
-      <!--</div>-->
-      <!--<button class="btn btn-outline-dark">Dark</button>-->
-    <!--</form>-->
-    <!--<button class="btn btn-outline-dark" (click)="logNumberOfPrint()">Dark</button>-->
-  <!--</div>-->
-  <!--<div class="col-sm-6">-->
-    <!--<div>Thiết kế ảnh bìa</div>-->
-    <!--<input class="file-input" type="file" (change)="startUploadCover($event.target.files)">-->
-    <!--<div *ngIf="percentageCover | async as pct">-->
-        <!--<span>-->
-          <!--<progress class="progress is-info"-->
-                    <!--[value]="pct"-->
-                    <!--max="100">-->
-        <!--</progress>-->
-        <!--</span>-->
-    <!--<span>-->
-          <!--{{ pct | number }}%-->
-        <!--</span>-->
-  <!--</div>-->
+<div class="row">
+  <div class="col-sm-6" style="padding-left: 5%;padding-top: 1%; padding-bottom: 1%;">
 
-    <!--<div *ngIf="snapshotCover | async as snap">-->
-      <!--<div *ngIf="downloadURLCover | async as url">-->
-        <!--<img [src]="url" style="max-width: 300px"><br>-->
-      <!--</div>-->
-    <!--</div>-->
-  <!--</div>-->
-<!--</div>-->
-<!--=======-->
-
-<!--<div class="wrap" style="background-image: url(./background.jpg); background-repeat: no-repeat; background-position: right bottom;">-->
-  <!--<div style="padding-top: 100px; text-align: center">-->
-    <!--<h2>In Sách</h2>-->
-    <!--<div>Giá tiền: {{price}} VNĐ/page</div>-->
-    <!---->
-    <!--<input type="file" name="file" id="file" class="inputfile" (change)="logEvent($event)" [(ngModel)]="file" data-multiple-caption="{count} files selected" multiple/>-->
-    <!--<label for="file" style="padding: 7px;margin-top: 1%;">-->
-      <!--<img src="../../assets/img/icons8-upload-26.png" alt="" style="width: 20px;">-->
-      <!--Choose files-->
-    <!--</label>-->
-  <!--</div>-->
-<!--&gt;>>>>>> 706e07d2ff10cd1e4281ef52057436e9811c2b2e-->
-
-  <div class="row">
-    <div class="col-sm-6" style="padding-left: 6%;padding-top: 1%; padding-bottom: 1%;">
-
-      <form (submit)="onSubmit(formFile)" #formFile="ngForm">
-        <div style="margin-bottom: 1%; ">Tên: {{name}}</div>
-        <div style="margin-bottom: 1%; ">Số trang: {{page}}</div>
-        <!--<input type="file" (change)="logEvent($event)" [(ngModel)]="file" name="file">-->
-        <div class="row" style="margin-bottom: 1%;">
-          <div class="col-sm-2">Số bản in:</div>
-          <div class="col-sm-4"><input type="numberOfPrint" class="form-control" placeholder="numberOfPrint" aria-label="numberOfPrint" aria-describedby="basic-addon1" [(ngModel)]="numberOfPrint" name="numberOfPrint"></div>
-        </div>
-        <div *ngIf="page!==undefined && numberOfPrint !== ''">Tiền: {{page}} x {{numberOfPrint}} x {{price}} = {{page*price*numberOfPrint | number}} VNĐ</div>
-        <div *ngIf="percentage | async as pct">
-        <span>
-          <progress class="progress is-info"
-                    [value]="pct"
-                    max="100">
-        </progress>
-        </span>
-          <span>
-          {{ pct | number }}%
-        </span>
-        </div>
-        <div *ngIf="snapshot | async as snap">
-          <div *ngIf="downloadURL | async as url">
-            <div>link: {{url | slice:0:50}}...</div>
-          </div>
-        </div>
-        <button class="btn btn-success" (click)="logNumberOfPrint()">Agree</button>
-      </form>
-
-    </div>
-
-    <div class="col-sm-6">
-      <div>Thiết kế ảnh bìa</div>
-      <input class="file-input" type="file" (change)="startUploadCover($event.target.files)">
-      <div *ngIf="percentageCover | async as pct">
+    <form (submit)="onSubmit(formFile)" #formFile="ngForm">
+      <div class="row" style="margin-bottom: 1%;">
+        <div class="col-sm-4">Tên File:</div>
+        <div class="col-sm-6"><input type="text" name="name" class="form-control" placeholder="Tên file đã chọn" disabled [(ngModel)]="name"></div>
+      </div>
+      <div class="row" style="margin-bottom: 1%;">
+        <div class="col-sm-4">Số trang:</div>
+        <div class="col-sm-6"><input type="text" name="name" class="form-control" placeholder="Số trang của file đã chọn" disabled [(ngModel)]="page"></div>
+      </div>
+      <!--<input type="file" (change)="logEvent($event)" [(ngModel)]="file" name="file">-->
+      <div class="row" style="margin-bottom: 1%;">
+        <div class="col-sm-4">Số bản in:</div>
+        <div class="col-sm-6"><input type="numberOfPrint" class="form-control" placeholder="numberOfPrint"
+                                     aria-label="numberOfPrint" aria-describedby="basic-addon1"
+                                     [(ngModel)]="numberOfPrint" name="numberOfPrint"></div>
+      </div>
+      <div *ngIf="page!==undefined && numberOfPrint !== ''">Tiền: {{page}} x {{numberOfPrint}} x {{price}} =
+        {{page*price*numberOfPrint | number}} VNĐ
+      </div>
+      <div *ngIf="percentage | async as pct">
         <span>
           <progress class="progress is-info"
                     [value]="pct"
@@ -176,38 +94,74 @@
           {{ pct | number }}%
         </span>
       </div>
-
-      <div *ngIf="snapshotCover | async as snap">
-        <div *ngIf="downloadURLCover | async as url">
-          <img [src]="url" style="max-width: 300px"><br>
+      <div *ngIf="snapshot | async as snap">
+        <div *ngIf="downloadURL | async as url">
+          <div>link: {{url | slice:0:50}}...</div>
         </div>
       </div>
-    </div>
+      <button class="btn btn-success" (click)="logNumberOfPrint()">Agree</button>
+    </form>
 
   </div>
 
-  <div style="margin-top: 1%; padding-left: 5%; ">
-    <h4 style="margin-bottom: 1%; ">Thông Tin Giao Hàng:</h4>
+  <div class="col-sm-6">
+    <div>Thiết kế ảnh bìa</div>
+    <input class="file-input" type="file" (change)="startUploadCover($event.target.files)">
+    <div *ngIf="percentageCover | async as pct">
+        <span>
+          <progress class="progress is-info"
+                    [value]="pct"
+                    max="100">
+        </progress>
+        </span>
+      <span>
+          {{ pct | number }}%
+        </span>
+    </div>
+    <button (click)="designCover()">Thiet ke</button>
 
-    <div class="row two">
-      <div class="col-sm-2">Họ Tên</div>
-      <div class="col-sm-3"><input type="customerName" class="form-control" placeholder="Nhập Họ và Tên" aria-label="customerName" aria-describedby="basic-addon1" [(ngModel)]="customerName" name="customerName"></div>
+    <div *ngIf="snapshotCover | async as snap">
+      <div *ngIf="downloadURLCover | async as url">
+        <img [src]="url" style="max-width: 300px"><br>
+      </div>
     </div>
-    <div class="row two">
-      <div class="col-sm-2">Số Điện Thoại</div>
-      <div class="col-sm-3"><input type="numberPhone" class="form-control" placeholder="Nhập số điện thoại" aria-label="numberPhone" aria-describedby="basic-addon1" [(ngModel)]="numberPhone" name="numberPhone"></div>
-    </div>
-    <div class="row two">
-      <div class="col-sm-2">Địa Chỉ Giao Hàng</div>
-      <div class="col-sm-3"><input type="address" class="form-control" placeholder="Nhập địa chỉ giao hàng" aria-label="address" aria-describedby="basic-addon1" [(ngModel)]="address" name="address"></div>
-    </div>
-    <div><button class="btn btn-success" (click)="updateCustomerAddress()">Cập Nhật</button></div>
   </div>
 
-  <div style="margin-top:1.5%; padding-left: 3%;">
-    <div class="three"><h5>Tổng Tiền: </h5></div>
-    <div class="three"><h5>Dự kiến giao hàng trong: </h5></div>
-    <div class="three text-center"><button class="btn btn-danger " style="text-align: center;" (click)="orderPrint()">Đặt Hàng</button></div>
-    <!--<h1>{{ (customers | async)?.email }}</h1>-->
+</div>
+
+<div style="margin-top: 1%; padding-left: 5%; ">
+  <h4 style="margin-bottom: 1%; ">Thông Tin Giao Hàng:</h4>
+
+  <div class="row two">
+    <div class="col-sm-2">Họ Tên</div>
+    <div class="col-sm-3"><input type="customerName" class="form-control" placeholder="Nhập Họ và Tên"
+                                 aria-label="customerName" aria-describedby="basic-addon1" [(ngModel)]="customerName"
+                                 name="customerName"></div>
   </div>
+  <div class="row two">
+    <div class="col-sm-2">Số Điện Thoại</div>
+    <div class="col-sm-3"><input type="numberPhone" class="form-control" placeholder="Nhập số điện thoại"
+                                 aria-label="numberPhone" aria-describedby="basic-addon1" [(ngModel)]="numberPhone"
+                                 name="numberPhone"></div>
+  </div>
+  <div class="row two">
+    <div class="col-sm-2">Địa Chỉ Giao Hàng</div>
+    <div class="col-sm-3"><input type="address" class="form-control" placeholder="Nhập địa chỉ giao hàng"
+                                 aria-label="address" aria-describedby="basic-addon1" [(ngModel)]="address"
+                                 name="address"></div>
+  </div>
+  <div>
+    <button class="btn btn-success" (click)="updateCustomerAddress()">Cập Nhật</button>
+  </div>
+</div>
+
+<div style="margin-top:1.5%; padding-left: 3%;">
+  <div class="three"><h5>Tổng Tiền: </h5></div>
+  <div class="three"><h5>Dự kiến giao hàng trong: </h5></div>
+  <div class="three text-center">
+    <button class="btn btn-danger " style="text-align: center;" (click)="orderPrint()">Đặt Hàng</button>
+  </div>
+  <!--<h1>{{ (customers | async)?.email }}</h1>-->
+</div>
+<div id="tui-image-editor-container"></div>
 

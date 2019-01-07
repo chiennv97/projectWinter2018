@@ -10,6 +10,8 @@ import { Observable } from 'rxjs';
 import {UserIdService} from '../core/userId.service';
 import { AngularFireStorage, AngularFireUploadTask } from 'angularfire2/storage';
 import { finalize } from 'rxjs/operators';
+const ImageEditor = require('tui-image-editor');
+const blackTheme = require('blackTheme');
 
 @Component({
   selector: 'page-user',
@@ -103,11 +105,11 @@ export class OrderComponent {
     const reader = new FileReader();
     reader.readAsBinaryString(event.target.files[0]);
     // comment when run
-    const seft = this;
-    reader.onloadend = function() {
-      const count = reader.result.match(/\/Type[\s]*\/Page[^s]/g).length;
-      seft.page = count;
-    };
+    // const seft = this;
+    // reader.onloadend = function() {
+    //   const count = reader.result.match(/\/Type[\s]*\/Page[^s]/g).length;
+    //   seft.page = count;
+    // };
     // this.startUpload(event.target.files);
   }
   createForm(name) {
@@ -234,5 +236,23 @@ export class OrderComponent {
   }
   getUserId() {
     return localStorage.getItem('currentUserID');
+  }
+  designCover() {
+    const imageEditor = new ImageEditor('#tui-image-editor-container', {
+      includeUI: {
+        loadImage: {
+          path: '../src/image/background-default.jpg',
+          name: 'SampleImage'
+        },
+        theme: blackTheme, // or whiteTheme
+        initMenu: 'mask',
+        menuBarPosition: 'left'
+      },
+      cssMaxWidth: 3000,
+      cssMaxHeight: 3000
+    });
+    window.onresize = function() {
+      imageEditor.ui.resizeEditor();
+    }
   }
 }
