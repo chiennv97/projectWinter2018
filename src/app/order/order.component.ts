@@ -10,8 +10,7 @@ import { Observable } from 'rxjs';
 import {UserIdService} from '../core/userId.service';
 import { AngularFireStorage, AngularFireUploadTask } from 'angularfire2/storage';
 import { finalize } from 'rxjs/operators';
-const ImageEditor = require('tui-image-editor');
-const blackTheme = require('blackTheme');
+import * as ImageEditor from 'tui-image-editor';
 
 @Component({
   selector: 'page-user',
@@ -35,6 +34,88 @@ export class OrderComponent {
   users$: AngularFireList<any>;
   orders$: AngularFireList<any>;
   event;
+  imageData;
+  blackTheme = {
+    'common.bi.image': 'assets/img/editor-logo.png',
+    'common.bisize.width': '190px',
+    'common.backgroundImage': 'none',
+    'common.backgroundColor': '#1e1e1e',
+    'common.border': '0px',
+
+    // header
+    'header.backgroundImage': 'none',
+    'header.backgroundColor': 'transparent',
+    'header.border': '0px',
+
+    // load button
+    'loadButton.backgroundColor': '#fff',
+    'loadButton.border': '1px solid #ddd',
+    'loadButton.color': '#222',
+    'loadButton.fontFamily': '\'Noto Sans\', sans-serif',
+    'loadButton.fontSize': '12px',
+
+    // download button
+    'downloadButton.backgroundColor': '#fdba3b',
+    'downloadButton.border': '1px solid #fdba3b',
+    'downloadButton.color': '#fff',
+    'downloadButton.fontFamily': '\'Noto Sans\', sans-serif',
+    'downloadButton.fontSize': '12px',
+
+    // main icons
+    'menu.normalIcon.path': '../css/svg/icon-d.svg',
+    'menu.normalIcon.name': 'icon-d',
+    'menu.activeIcon.path': '../css/svg/icon-b.svg',
+    'menu.activeIcon.name': 'icon-b',
+    'menu.disabledIcon.path': '../css/svg/icon-a.svg',
+    'menu.disabledIcon.name': 'icon-a',
+    'menu.hoverIcon.path': '../css/svg/icon-c.svg',
+    'menu.hoverIcon.name': 'icon-c',
+    'menu.iconSize.width': '24px',
+    'menu.iconSize.height': '24px',
+
+    // submenu primary color
+    'submenu.backgroundColor': '#1e1e1e',
+    'submenu.partition.color': '#3c3c3c',
+
+    // submenu icons
+    'submenu.normalIcon.path': '../css/svg/icon-d.svg',
+    'submenu.normalIcon.name': 'icon-d',
+    'submenu.activeIcon.path': '../css/svg/icon-c.svg',
+    'submenu.activeIcon.name': 'icon-c',
+    'submenu.iconSize.width': '32px',
+    'submenu.iconSize.height': '32px',
+
+    // submenu labels
+    'submenu.normalLabel.color': '#8a8a8a',
+    'submenu.normalLabel.fontWeight': 'lighter',
+    'submenu.activeLabel.color': '#fff',
+    'submenu.activeLabel.fontWeight': 'lighter',
+
+    // checkbox style
+    'checkbox.border': '0px',
+    'checkbox.backgroundColor': '#fff',
+
+    // range style
+    'range.pointer.color': '#fff',
+    'range.bar.color': '#666',
+    'range.subbar.color': '#d1d1d1',
+
+    'range.disabledPointer.color': '#414141',
+    'range.disabledBar.color': '#282828',
+    'range.disabledSubbar.color': '#414141',
+
+    'range.value.color': '#fff',
+    'range.value.fontWeight': 'lighter',
+    'range.value.fontSize': '11px',
+    'range.value.border': '1px solid #353535',
+    'range.value.backgroundColor': '#151515',
+    'range.title.color': '#fff',
+    'range.title.fontWeight': 'lighter',
+
+    // colorpicker style
+    'colorpicker.button.border': '1px solid #1e1e1e',
+    'colorpicker.title.color': '#fff'
+  };
 
   task: AngularFireUploadTask;
   taskCover: AngularFireUploadTask;
@@ -52,6 +133,8 @@ export class OrderComponent {
 
   // State for dropzone CSS toggling
   isHovering: boolean;
+  display = true;
+  done = 0;
 
   constructor(
     public userService: UserService,
@@ -105,11 +188,11 @@ export class OrderComponent {
     const reader = new FileReader();
     reader.readAsBinaryString(event.target.files[0]);
     // comment when run
-    // const seft = this;
-    // reader.onloadend = function() {
-    //   const count = reader.result.match(/\/Type[\s]*\/Page[^s]/g).length;
-    //   seft.page = count;
-    // };
+    const seft = this;
+    reader.onloadend = function() {
+      const count = reader.result.match(/\/Type[\s]*\/Page[^s]/g).length;
+      seft.page = count;
+    };
     // this.startUpload(event.target.files);
   }
   createForm(name) {
@@ -150,7 +233,8 @@ export class OrderComponent {
 
   startUpload(event: FileList) {
     // The File object
-    const file = event.item(0)
+    const file = event.item(0);
+    console.log(file);
 
     // The storage path
     const path = `test/${new Date().getTime()}_${file.name}`;
@@ -170,33 +254,36 @@ export class OrderComponent {
     // this.downloadURL = this.task.downloadURL();
     this.task.snapshotChanges().pipe(
       finalize(() => {
-        this.downloadURL = fileRef.getDownloadURL();
         const timeCreate = new Date().getTime();
-        this.downloadURL.subscribe(url => {
-          this.orders$.update(timeCreate.toString(), {
-            name: this.name,
-            numberOfPrint: this.numberOfPrint,
-            page: this.page,
-            docurl: url,
-            coverurl: url,
-            price: this.price,
-            timeUpload: timeCreate,
-            timeFinish: timeCreate + 86400,
-            customerName: this.customerName,
-            numberPhone: this.numberPhone,
-            address: this.address,
-            status: 'wait'
-          });
-          console.log('cap nhat thanh cong');
+        fileRef.getDownloadURL().subscribe(url => {
+          this.done++;
+          this.downloadURL = url;
+          if (this.done === 2) {
+            this.orders$.update(timeCreate.toString(), {
+              name: this.name,
+              numberOfPrint: this.numberOfPrint,
+              page: this.page,
+              docurl: url,
+              coverurl: this.downloadURLCover,
+              price: this.price,
+              timeUpload: timeCreate,
+              timeFinish: timeCreate + 86400,
+              customerName: this.customerName,
+              numberPhone: this.numberPhone,
+              address: this.address,
+              status: 'wait'
+            });
+            console.log('cap nhat thanh cong');
+          }
         });
       })
     )
       .subscribe();
   }
 
-  startUploadCover(event: FileList) {
+  startUploadCover(imageData) {
     // The File object
-    const file = event.item(0)
+    // const file = event;
 
     // Client-side validation example
     // if (file.type.split('/')[0] !== 'image') {
@@ -205,23 +292,52 @@ export class OrderComponent {
     // }
 
     // The storage path
-    const path = `cover/${new Date().getTime()}_${file.name}`;
+    const coverName = `${new Date().getTime()}`;
 
     // Totally optional metadata
-    const customMetadata = { app: 'My AngularFire-powered PWA!' };
+    // const customMetadata = { format: 'base64' };
 
     // The main task
-    this.taskCover = this.storage.upload(path, file, { customMetadata });
-    const fileRef = this.storage.ref(path);
-
+    // this.taskCover = this.storage.upload(path, file, { customMetadata });
+    // console.log(imageData.substring(22));
+    this.taskCover = this.storage.ref('cover').child(coverName)
+      .putString(imageData.substring(22), 'base64');
+    // this.storage.ref(`cover/${coverName}`).getDownloadURL().subscribe((imageUrl) => {
+    //   console.log(imageUrl);
+    // });
+    const fileRef = this.storage.ref(`cover/${coverName}`);
+    // this.storage.upload(path, imageData.substring(22), customMetadata);
     // Progress monitoring
-    this.percentageCover = this.taskCover.percentageChanges();
-    this.snapshotCover   = this.taskCover.snapshotChanges();
+    // this.percentageCover = this.taskCover.percentageChanges();
+    // this.snapshotCover   = this.taskCover.snapshotChanges();
 
     // The file's download URL
     // this.downloadURL = this.task.downloadURL();
     this.taskCover.snapshotChanges().pipe(
-      finalize(() => this.downloadURLCover = fileRef.getDownloadURL() )
+      finalize(() => {
+        fileRef.getDownloadURL().subscribe((coverUrl) => {
+          const timeCreate = new Date().getTime();
+          this.done++;
+          this.downloadURLCover = coverUrl;
+          if (this.done === 2) {
+            this.orders$.update(timeCreate.toString(), {
+              name: this.name,
+              numberOfPrint: this.numberOfPrint,
+              page: this.page,
+              docurl: this.downloadURL,
+              coverurl: this.downloadURLCover,
+              price: this.price,
+              timeUpload: timeCreate,
+              timeFinish: timeCreate + 86400,
+              customerName: this.customerName,
+              numberPhone: this.numberPhone,
+              address: this.address,
+              status: 'wait'
+            });
+            console.log('cap nhat thanh cong');
+          }
+        });
+      })
     )
       .subscribe();
   }
@@ -231,20 +347,25 @@ export class OrderComponent {
   }
 
   orderPrint() {
+    this.done = 0;
     this.startUpload(this.event.target.files);
+    this.startUploadCover(this.imageData);
     // console.log(this.getUserId());
   }
   getUserId() {
     return localStorage.getItem('currentUserID');
   }
   designCover() {
+    this.display = false;
+    localStorage.setItem('imageData', '');
+    document.getElementById('tui-image-editor-container').style.display = 'block';
     const imageEditor = new ImageEditor('#tui-image-editor-container', {
       includeUI: {
         loadImage: {
-          path: '../src/image/background-default.jpg',
+          path: '../assets/img/background-default.jpg',
           name: 'SampleImage'
         },
-        theme: blackTheme, // or whiteTheme
+        theme: this.blackTheme,
         initMenu: 'mask',
         menuBarPosition: 'left'
       },
@@ -253,6 +374,20 @@ export class OrderComponent {
     });
     window.onresize = function() {
       imageEditor.ui.resizeEditor();
-    }
+    };
+    document.getElementById('ui-image-editor-download-btn').addEventListener('click', () => {
+      console.log('da click');
+      if (!this.display) {
+        document.getElementById('tui-image-editor-container').style.display = 'none';
+        this.display = true;
+        this.sleep(1000).then(() => {
+          this.imageData = localStorage.getItem('imageData');
+          // console.log(localStorage.getItem('imageBlob'));
+        });
+      }
+    });
+  }
+  sleep (time) {
+    return new Promise((resolve) => setTimeout(resolve, time));
   }
 }

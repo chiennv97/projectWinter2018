@@ -79,4 +79,3 @@ var blackTheme = {
     'colorpicker.button.border': '1px solid #1e1e1e',
     'colorpicker.title.color': '#fff'
 };
-export var blackTheme;

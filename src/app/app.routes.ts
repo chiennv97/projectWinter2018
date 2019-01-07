@@ -11,6 +11,6 @@ export const rootRouterConfig: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent},
   { path: 'login', component: LoginComponent, canActivate: [AuthGuard] },
-  { path: 'register', component: RegisterComponent, canActivate: [AuthGuard] },
+  // { path: 'register', component: RegisterComponent, canActivate: [AuthGuard] },
   { path: 'order', component: OrderComponent}
 ];
