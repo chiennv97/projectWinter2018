@@ -1,6 +1,10 @@
 /*.image{*/
   /*width: 20%*/
 /*}*/
+body{
+  overflow-x: hidden;
+}
+
 .inputfile {
   width: 0.1px;
   height: 0.1px;
@@ -21,4 +25,14 @@
 .inputfile:focus + label,
 .inputfile + label:hover {
   background-color: rgba(251, 0, 0, 0.65);
+}
+
+div .two{
+  margin-top: 1%;
+
+}
+
+div .three{
+  margin-top: 1%;
+  margin-bottom: 0.5%;
 }

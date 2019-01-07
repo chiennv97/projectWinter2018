@@ -50,54 +50,64 @@
     </div>
   </nav>
 </header>
-<div style="padding-top: 100px">
-  <h4>In Sách</h4>
-  <div>Giá tiền: {{price}} VNĐ / (1 trang giấy)</div>
-  <input type="file" name="file" id="file" class="inputfile" (change)="logEvent($event)" [(ngModel)]="file" data-multiple-caption="{count} files selected" multiple/>
-  <label for="file" style="padding: 7px;">
-    <img src="../../assets/img/icons8-upload-26.png" alt="" style="width: 20px;">
-    Choose files
-  </label>
-</div>
 
-<div class="row">
-  <div class="col-sm-6">
-
-    <form (submit)="onSubmit(formFile)" #formFile="ngForm">
-      <div>Tên: {{name}}</div>
-      <div>Số trang: {{page}}</div>
-      <!--<input type="file" (change)="logEvent($event)" [(ngModel)]="file" name="file">-->
-      <div class="row">
-        <div class="col-sm-2">Số bản in:</div>
-        <div class="col-sm-4"><input type="numberOfPrint" class="form-control" placeholder="numberOfPrint" aria-label="numberOfPrint" aria-describedby="basic-addon1" [(ngModel)]="numberOfPrint" name="numberOfPrint"></div>
-      </div>
-      <div *ngIf="page!==undefined && numberOfPrint !== ''">Tiền: {{page}} x {{numberOfPrint}} x {{price}} = {{page*price*numberOfPrint | number}} VNĐ</div>
-      <button class="btn btn-outline-dark">Dark</button>
-    </form>
-    <button class="btn btn-outline-dark" (click)="logNumberOfPrint()">Dark</button>
+<div class="wrap" style="background-image: url(./background.jpg); background-repeat: no-repeat; background-position: right bottom;">
+  <div style="padding-top: 100px; text-align: center">
+    <h2>In Sách</h2>
+    <div>Giá tiền: {{price}} VNĐ/page</div>
+    
+    <input type="file" name="file" id="file" class="inputfile" (change)="logEvent($event)" [(ngModel)]="file" data-multiple-caption="{count} files selected" multiple/>
+    <label for="file" style="padding: 7px;margin-top: 1%;">
+      <img src="../../assets/img/icons8-upload-26.png" alt="" style="width: 20px;">
+      Choose files
+    </label>
   </div>
-  <div class="col-sm-6">
-    <div>Thiết kế ảnh bìa</div>
+
+  <div class="row">
+    <div class="col-sm-6" style="padding-left: 6%;padding-top: 1%; padding-bottom: 1%;">
+
+      <form (submit)="onSubmit(formFile)" #formFile="ngForm">
+        <div style="margin-bottom: 1%; ">Tên: {{name}}</div>
+        <div style="margin-bottom: 1%; ">Số trang: {{page}}</div>
+        <!--<input type="file" (change)="logEvent($event)" [(ngModel)]="file" name="file">-->
+        <div class="row" style="margin-bottom: 1%;">
+          <div class="col-sm-2">Số bản in:</div>
+          <div class="col-sm-4"><input type="numberOfPrint" class="form-control" placeholder="numberOfPrint" aria-label="numberOfPrint" aria-describedby="basic-addon1" [(ngModel)]="numberOfPrint" name="numberOfPrint"></div>
+        </div>
+        <div *ngIf="page!==undefined && numberOfPrint !== ''">Tiền: {{page}} x {{numberOfPrint}} x {{price}} = {{page*price*numberOfPrint | number}} VNĐ</div>
+        <button class="btn btn-success" (click)="logNumberOfPrint()">Agree</button>
+      </form>
+      
+    </div>
+
+    <div class="col-sm-6">
+      <div></div> <!-- Thiết kế ảnh bìa -->
+    </div>
+
+  </div>
+
+  <div style="margin-top: 1%; padding-left: 5%; ">
+    <h4 style="margin-bottom: 1%; ">Thông Tin Giao Hàng:</h4>
+    
+    <div class="row two">
+      <div class="col-sm-2">Họ Tên</div>
+      <div class="col-sm-3"><input type="customerName" class="form-control" placeholder="Nhập Họ và Tên" aria-label="customerName" aria-describedby="basic-addon1" [(ngModel)]="customerName" name="customerName"></div>
+    </div>
+    <div class="row two">
+      <div class="col-sm-2">Số Điện Thoại</div>
+      <div class="col-sm-3"><input type="numberPhone" class="form-control" placeholder="Nhập số điện thoại" aria-label="numberPhone" aria-describedby="basic-addon1" [(ngModel)]="numberPhone" name="numberPhone"></div>
+    </div>
+    <div class="row two">
+      <div class="col-sm-2">Địa Chỉ Giao Hàng</div>
+      <div class="col-sm-3"><input type="address" class="form-control" placeholder="Nhập địa chỉ giao hàng" aria-label="address" aria-describedby="basic-addon1" [(ngModel)]="address" name="address"></div>
+    </div>
+    <div><button class="btn btn-success" (click)="updateCustomerAddress()">Cập Nhật</button></div>
+  </div>
+
+  <div style="margin-top:1.5%; padding-left: 3%;">
+    <div class="three"><h5>Tổng Tiền: </h5></div>
+    <div class="three"><h5>Dự kiến giao hàng trong: </h5></div>
+    <div class="three text-center"><button class="btn btn-danger " style="text-align: center;">Đặt Hàng</button></div>
+    <!--<h1>{{ (customers | async)?.email }}</h1>-->
   </div>
 </div>
-
-<div>
-  <h4>Thông Tin Giao Hàng:</h4>
-  <button class="btn btn-outline-dark" (click)="updateCustomerAddress()">Cập Nhật</button>
-  <div class="row">
-    <div class="col-sm-2">Họ Tên</div>
-    <div class="col-sm-4"><input type="customerName" class="form-control" placeholder="Nhập Họ và Tên" aria-label="customerName" aria-describedby="basic-addon1" [(ngModel)]="customerName" name="customerName"></div>
-  </div>
-  <div class="row">
-    <div class="col-sm-2">Số Điện Thoại</div>
-    <div class="col-sm-4"><input type="numberPhone" class="form-control" placeholder="Nhập số điện thoại" aria-label="numberPhone" aria-describedby="basic-addon1" [(ngModel)]="numberPhone" name="numberPhone"></div>
-  </div>
-  <div class="row">
-    <div class="col-sm-2">Địa Chỉ Giao Hàng</div>
-    <div class="col-sm-4"><input type="address" class="form-control" placeholder="Nhập địa chỉ giao hàng" aria-label="address" aria-describedby="basic-addon1" [(ngModel)]="address" name="address"></div>
-  </div>
-</div>
-<div>Tổng Tiền: </div>
-<div>Dự kiến giao hàng trong</div>
-<button class="btn btn-outline-dark">Đặt Hàng</button>
-<!--<h1>{{ (customers | async)?.email }}</h1>-->
