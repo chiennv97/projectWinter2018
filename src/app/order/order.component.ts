@@ -36,7 +36,7 @@ export class OrderComponent {
   users$: AngularFireList<any>;
   orders$: AngularFireList<any>;
   event;
-  imageData;
+  imageData = 'assets/img/coverdefault.png';
   blackTheme = {
     'common.bi.image': 'assets/img/editor-logo.png',
     'common.bisize.width': '190px',

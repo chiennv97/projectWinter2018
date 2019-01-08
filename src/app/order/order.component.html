@@ -3,7 +3,7 @@
     <nav class="navbar navbar-expand-lg  navbar-light">
       <div class="container">
         <a class="navbar-brand" href="/">
-          <img src="../../assets/img/logo.png" style="height: 20px;" alt=""/>
+          <img src="../../assets/img/logoweb.png" height="23px" alt=""/>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,9 +27,9 @@
       </div>
     </nav>
   </header>
-  <div style="padding-top: 100px; text-align: center">
-    <h4>In Sách</h4>
-    <div>Giá tiền: {{price}} VNĐ / (1 trang giấy)</div>
+  <div style="padding-top: 110px; color: black; padding-left: 55px; text-align: center">
+    <div style="font-size: x-large">In Sách</div>
+    <div>Giá chỉ: {{price}} VNĐ / (1 trang giấy)</div>
     <input type="file" name="file" id="file" class="inputfile" (change)="chooseFile($event)" [(ngModel)]="file"/>
     <label for="file" style="padding: 7px;">
       <img src="../../assets/img/icons8-upload-26.png" alt="" style="width: 20px;">
@@ -37,17 +37,19 @@
     </label>
   </div>
 
-
-  <div class="row">
+  <div style="padding:10px 55px">
+    <div style=" border-bottom: 2px dashed"></div>
+  </div>
+  <div class="row" style="color: black;">
     <div class="col-sm-6" style="padding-left: 5%;padding-top: 1%; padding-bottom: 1%;">
-
-      <form (submit)="onSubmit(formFile)" #formFile="ngForm">
+      <div style="margin-bottom: 1%; font-size: large">Thông Tin Tệp:</div>
+      <div>
         <div class="row" style="margin-bottom: 1%;">
           <div class="col-sm-4">Tên File:</div>
           <div class="col-sm-8"><input type="text" name="name" class="form-control" placeholder="Tên file đã chọn" disabled [(ngModel)]="name"></div>
         </div>
         <div class="row" style="margin-bottom: 1%;">
-          <div class="col-sm-4">Số trang: {{page}}</div>
+          <div class="col-sm-4">Số trang:</div>
           <div class="col-sm-8"><input type="text" name="page" class="form-control" placeholder="Số trang của file đã chọn" disabled [(ngModel)]="page"></div>
         </div>
         <!--<input type="file" (change)="logEvent($event)" [(ngModel)]="file" name="file">-->
@@ -57,24 +59,8 @@
                                        aria-label="numberOfPrint" aria-describedby="basic-addon1"
                                        [(ngModel)]="numberOfPrint" name="numberOfPrint"></div>
         </div>
-        <!--<div *ngIf="percentage | async as pct">-->
-        <!--<span>-->
-          <!--<progress class="progress is-info"-->
-                    <!--[value]="pct"-->
-                    <!--max="100">-->
-        <!--</progress>-->
-        <!--</span>-->
-        <!--<span>-->
-          <!--{{ pct | number }}%-->
-        <!--</span>-->
-        <!--</div>-->
-        <!--<div *ngIf="snapshot | async as snap">-->
-          <!--<div *ngIf="downloadURL | async as url">-->
-            <!--<div>link: {{url | slice:0:50}}...</div>-->
-          <!--</div>-->
-        <!--</div>-->
         <div>
-          <h4 style="margin-bottom: 1%; ">Thông Tin Giao Hàng:</h4>
+          <div style="margin-bottom: 1%; font-size: large">Thông Tin Giao Hàng:</div>
 
           <div class="row two">
             <div class="col-sm-4">Họ Tên</div>
@@ -95,62 +81,56 @@
                                          name="address"></div>
           </div>
           <div>
-            <button class="btn btn-success" (click)="updateCustomerAddress()">Cập Nhật</button>
+            <button class="buttonUpdate" (click)="updateCustomerAddress()">Cập Nhật</button>
           </div>
         </div>
-        <div>
-          <div class="three">
-            <div>
-              Tổng Tiền:
-              <span *ngIf="page!==undefined">{{page}} x {{numberOfPrint}} x {{price}} =
-              {{page*price*numberOfPrint | number}} VNĐ
-              </span>
-            </div>
-          </div>
-          <div class="three"><div>Dự kiến giao hàng trong: 1 Ngày</div></div>
-          <div class="three text-center">
-            <button class="btn btn-danger " style="text-align: center;" (click)="orderPrint()">Đặt Hàng</button>
-          </div>
-        </div>
-        <!--<button class="btn btn-success" (click)="logNumberOfPrint()">Agree</button>-->
-      </form>
+      </div>
 
     </div>
 
     <div class="col-sm-6">
-      <div>Thiết kế ảnh bìa</div>
-      <button (click)="designCover()">Thiet ke</button>
-      <img src={{imageData}} alt="">
-
-      <div *ngIf="snapshotCover | async as snap">
-        <div *ngIf="downloadURLCover | async as url">
-          <img [src]="url" style="max-width: 300px"><br>
-        </div>
-      </div>
+      <div style="font-size: large">Thiết kế ảnh bìa</div>
+      <div style="text-align: center;"><img src={{imageData}} alt="" style="height: 350px"></div>
+      <div style="text-align: center;"><button (click)="designCover()" class="buttonAction">Thiết kế</button></div>
     </div>
 
+  </div>
+  <div style="padding:0 55px">
+    <div style=" border-bottom: 2px dashed"></div>
+  </div>
+  <div style="padding: 0 55px; color: black">
+    <div class="three">
+      <div style="font-size: larger">
+        Tổng Tiền:
+        <span *ngIf="page!==undefined">{{page}} x {{numberOfPrint}} x {{price}} =
+              {{page*price*numberOfPrint | number}} VNĐ
+              </span>
+      </div>
+    </div>
+    <div class="three"><div style="font-size: larger">Dự kiến giao hàng trong: 1 Ngày</div></div>
+    <div style="text-align: right; margin-top: -60px">
+      <button class="buttonOrder" style="text-align: center;" (click)="orderPrint()">Đặt Hàng</button>
+    </div>
   </div>
 </div>
 <div id="tui-image-editor-container"></div>
 
 
-<footer class="footer-area section-gap" style="padding: 400px 0px 120px;">
+<footer class="footer-area section-gap" style="padding: 20px 0px 20px; background-color: black; margin-top: 100px">
   <div class="container">
-    <div class="row" >
-      <h3 style="color: white; ">
-        Một người không đọc sách chẳng hơn gì kẻ không biết đọc.
+    <div class="row" style="text-align: center; margin: auto; display: block; margin-top: 30px;">
+      <h5 style="color: white;">
+        Một cuốn sách hay trên giá sách là một người bạn dù quay lưng lại nhưng vẫn là bạn tốt.
         <br>
+        <br>A good book on your shelf is a friend that turns its back on you and remains a friend.
         <br>
-        (A person who won’t read has no advantage over one who can’t read.)
-        <br>
-        <br>
-        Mark Twain
-      </h3>
+        <br>-* Khuyết danh *-
+      </h5>
     </div>
-    <div class="footer-bottom row align-items-center">
+    <div class="footer-bottom row align-items-center" style="margin-top: 30px;">
       <p class="footer-text m-0 col-lg-8 col-md-12">
         <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-        Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa ti-heart" aria-hidden="true"></i> by <a href="https://www.facebook.com/PhThTu" target="_blank">PTT</a>
+        Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa ti-heart" aria-hidden="false"></i> by <a href="https://www.facebook.com/PhThTu" target="_blank">PTT</a>
         <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
       <div class="col-lg-4 col-md-12 footer-social">
         <a href="#"><i class="fa ti-facebook"></i></a>
