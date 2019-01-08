@@ -11,6 +11,8 @@ import {UserIdService} from '../core/userId.service';
 import { AngularFireStorage, AngularFireUploadTask } from 'angularfire2/storage';
 import { finalize } from 'rxjs/operators';
 import * as ImageEditor from 'tui-image-editor';
+import Swal from 'sweetalert2';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'page-user',
@@ -144,7 +146,8 @@ export class OrderComponent {
     private fb: FormBuilder,
     public db: AngularFireDatabase,
     public userIdService: UserIdService,
-    private storage: AngularFireStorage
+    private storage: AngularFireStorage,
+    private router: Router,
   ) {
     this.userService.getCurrentUser()
       .then(res => {
@@ -188,11 +191,11 @@ export class OrderComponent {
     const reader = new FileReader();
     reader.readAsBinaryString(event.target.files[0]);
     // comment when run
-    /*const seft = this;
+    const seft = this;
     reader.onloadend = function() {
       const count = reader.result.match(/\/Type[\s]*\/Page[^s]/g).length;
       seft.page = count;
-    };*/
+    };
     // this.startUpload(event.target.files);
   }
   createForm(name) {
@@ -267,13 +270,20 @@ export class OrderComponent {
               coverurl: this.downloadURLCover,
               price: this.price,
               timeUpload: timeCreate,
-              timeFinish: timeCreate + 86400,
+              timeFinish: '',
               customerName: this.customerName,
               numberPhone: this.numberPhone,
               address: this.address,
               status: 'wait'
             });
             console.log('cap nhat thanh cong');
+            Swal({
+              type: 'success',
+              title: 'Waiting',
+              text: 'Waiting some seconds',
+              timer: 2000,
+            });
+            this.router.navigate(['/history']);
           }
         });
       })
@@ -328,13 +338,20 @@ export class OrderComponent {
               coverurl: this.downloadURLCover,
               price: this.price,
               timeUpload: timeCreate,
-              timeFinish: timeCreate + 86400,
+              timeFinish: '',
               customerName: this.customerName,
               numberPhone: this.numberPhone,
               address: this.address,
               status: 'wait'
             });
             console.log('cap nhat thanh cong');
+            Swal({
+              type: 'success',
+              title: 'Đặt hàng thành công',
+              text: 'success',
+              timer: 2000,
+            });
+            this.router.navigate(['/history']);
           }
         });
       })
@@ -348,6 +365,15 @@ export class OrderComponent {
 
   orderPrint() {
     this.done = 0;
+    // swal('Click on either the button or outside the modal.')
+    //   .then((value) => {
+    //     swal(`The returned value is: ${value}`);
+    //   });
+    Swal({
+      type: 'warning',
+      title: 'Waiting',
+      text: 'Waiting some seconds'
+    });
     this.startUpload(this.event.target.files);
     this.startUploadCover(this.imageData);
     // console.log(this.getUserId());
