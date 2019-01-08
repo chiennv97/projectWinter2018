@@ -6,6 +6,7 @@ import {FirebaseUserModel} from '../core/user.model';
 import {UserService} from '../core/user.service';
 import { Location } from '@angular/common';
 import {AuthService} from '../core/auth.service';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-history-order',
   templateUrl: './history-order.component.html',
@@ -13,7 +14,9 @@ import {AuthService} from '../core/auth.service';
 })
 export class HistoryOrderComponent implements OnInit {
   orders$: AngularFireList<any>;
+  message$: AngularFireList<any>;
   items: Observable<any[]>;
+  message: Observable<any[]>;
   user: FirebaseUserModel = new FirebaseUserModel();
   constructor(
     public db: AngularFireDatabase,
@@ -37,8 +40,22 @@ export class HistoryOrderComponent implements OnInit {
       }, err => {
         // this.router.navigate(['/login']);
       });
-    this.orders$ = this.db.list('/orders/' + this.getUserId());
+    // this.orders$ = this.db.list('/orders/' + this.getUserId());
+    this.orders$ = this.db.list('/orders', ref => ref.orderByChild('uid').equalTo(this.getUserId()));
     this.items = this.orders$.valueChanges();
+    this.message$ = this.db.list('/message');
+    this.message = this.message$.valueChanges();
+    this.message.subscribe((value) => {
+      console.log(value);
+      if ( value.length !== 0) {
+        Swal({
+          type: 'success',
+          title: 'Tệp ' + value[0].name,
+          text: ' đã in xong và đang được giao hàng',
+        });
+        this.message$.remove();
+      }
+    });
   }
 
   ngOnInit() {

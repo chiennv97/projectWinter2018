@@ -173,7 +173,7 @@ export class OrderComponent {
       this.address = action.payload.val().address;
     });
     this.users$ = this.db.list('/users');
-    this.orders$ = this.db.list('/orders/' + this.getUserId());
+    this.orders$ = this.db.list('/orders/');
     // this.currentUser = this.customers.object('lCot8XRm2jNCYchutulTYL7ANIq2').valueChanges();
 
   }
@@ -274,7 +274,8 @@ export class OrderComponent {
               customerName: this.customerName,
               numberPhone: this.numberPhone,
               address: this.address,
-              status: 'wait'
+              status: 'wait',
+              uid: this.getUserId()
             });
             console.log('cap nhat thanh cong');
             Swal({
@@ -342,7 +343,8 @@ export class OrderComponent {
               customerName: this.customerName,
               numberPhone: this.numberPhone,
               address: this.address,
-              status: 'wait'
+              status: 'wait',
+              uid: this.getUserId()
             });
             console.log('cap nhat thanh cong');
             Swal({
@@ -372,7 +374,7 @@ export class OrderComponent {
     Swal({
       type: 'warning',
       title: 'Waiting',
-      text: 'Waiting some seconds'
+      text: 'Đợi Upload file và ảnh bìa',
     });
     this.startUpload(this.event.target.files);
     this.startUploadCover(this.imageData);

@@ -57,25 +57,22 @@
                                        aria-label="numberOfPrint" aria-describedby="basic-addon1"
                                        [(ngModel)]="numberOfPrint" name="numberOfPrint"></div>
         </div>
-        <div *ngIf="page!==undefined && numberOfPrint !== ''">Tiền: {{page}} x {{numberOfPrint}} x {{price}} =
-          {{page*price*numberOfPrint | number}} VNĐ
-        </div>
-        <div *ngIf="percentage | async as pct">
-        <span>
-          <progress class="progress is-info"
-                    [value]="pct"
-                    max="100">
-        </progress>
-        </span>
-          <span>
-          {{ pct | number }}%
-        </span>
-        </div>
-        <div *ngIf="snapshot | async as snap">
-          <div *ngIf="downloadURL | async as url">
-            <div>link: {{url | slice:0:50}}...</div>
-          </div>
-        </div>
+        <!--<div *ngIf="percentage | async as pct">-->
+        <!--<span>-->
+          <!--<progress class="progress is-info"-->
+                    <!--[value]="pct"-->
+                    <!--max="100">-->
+        <!--</progress>-->
+        <!--</span>-->
+        <!--<span>-->
+          <!--{{ pct | number }}%-->
+        <!--</span>-->
+        <!--</div>-->
+        <!--<div *ngIf="snapshot | async as snap">-->
+          <!--<div *ngIf="downloadURL | async as url">-->
+            <!--<div>link: {{url | slice:0:50}}...</div>-->
+          <!--</div>-->
+        <!--</div>-->
         <div>
           <h4 style="margin-bottom: 1%; ">Thông Tin Giao Hàng:</h4>
 
@@ -102,8 +99,15 @@
           </div>
         </div>
         <div>
-          <div class="three"><h5>Tổng Tiền: </h5></div>
-          <div class="three"><h5>Dự kiến giao hàng trong: </h5></div>
+          <div class="three">
+            <div>
+              Tổng Tiền:
+              <span *ngIf="page!==undefined">{{page}} x {{numberOfPrint}} x {{price}} =
+              {{page*price*numberOfPrint | number}} VNĐ
+              </span>
+            </div>
+          </div>
+          <div class="three"><div>Dự kiến giao hàng trong: 1 Ngày</div></div>
           <div class="three text-center">
             <button class="btn btn-danger " style="text-align: center;" (click)="orderPrint()">Đặt Hàng</button>
           </div>
