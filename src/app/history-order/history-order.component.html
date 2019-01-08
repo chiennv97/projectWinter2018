@@ -1,0 +1,84 @@
+<header class="default-header" style="background-color: black">
+  <nav class="navbar navbar-expand-lg  navbar-light">
+    <div class="container">
+      <a class="navbar-brand" href="/">
+        <img src="../../assets/img/logo.png" alt="" style="height: 20px;"/>
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="lnr lnr-menu"></span>
+      </button>
+
+      <div class="collapse navbar-collapse justify-content-end align-items-center" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+          <li><a href="/order">Đặt hàng</a></li>
+          <li><a (click)="logout()" style="color: white; cursor: pointer">Logout</a></li>
+          <li>
+
+          </li>
+          <li>
+            <a style="color: white">{{user.name}}</a>
+            <img class="card-img-top image" [src]="user.image" alt="Card image cap"
+                 style="width: 28px; height: 28px; border-radius: 50%;">
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+<div style="padding-top: 100px; padding-bottom: 200px">
+  <h4 style="text-align: center; padding: 20px">LỊCH SỬ ĐẶT HÀNG</h4>
+  <table class="table" >
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Thông tin file</th>
+      <th scope="col">Trạng thái</th>
+      <th scope="col">Ảnh bìa</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of items| async; index as i ">
+      <th scope="row">{{i+1}}</th>
+      <td>
+        <div>Tên file: {{item.name}}</div>
+        <div>Số trang: {{item.page}}</div>
+        <div>Số lượng bản in: {{item.numberOfPrint}}</div>
+      </td>
+      <td>{{item.status}}</td>
+      <td><img src="{{item.coverurl}}" alt="" height="100px"></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<footer class="footer-area section-gap" style="padding: 400px 0px 120px;">
+  <div class="container">
+    <div class="row">
+      <h3 style="color: white; ">
+        Một người không đọc sách chẳng hơn gì kẻ không biết đọc.
+        <br>
+        <br>
+        (A person who won’t read has no advantage over one who can’t read.)
+        <br>
+        <br>
+        Mark Twain
+      </h3>
+    </div>
+    <div class="footer-bottom row align-items-center">
+      <p class="footer-text m-0 col-lg-8 col-md-12">
+        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+        Copyright &copy;<script>document.write(new Date().getFullYear());</script>
+        All rights reserved | This template is made with <i class="fa ti-heart" aria-hidden="true"></i> by <a
+        href="https://www.facebook.com/PhThTu" target="_blank">PTT</a>
+        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+      <div class="col-lg-4 col-md-12 footer-social">
+        <a href="#"><i class="fa ti-facebook"></i></a>
+        <a href="#"><i class="fa ti-google"></i></a>
+        <a href="#"><i class="fa ti-dribbble"></i></a>
+        <a href="#"><i class="fa ti-dropbox"></i></a>
+      </div>
+    </div>
+  </div>
+</footer>

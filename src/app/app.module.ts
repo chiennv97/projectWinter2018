@@ -25,6 +25,7 @@ import { HomeComponent } from './home/home.component';
 import {UserIdService} from './core/userId.service';
 import { FileSizePipe } from './pipe/file-size.pipe';
 import { AngularFireStorageModule } from 'angularfire2/storage';
+import { HistoryOrderComponent } from './history-order/history-order.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { AngularFireStorageModule } from 'angularfire2/storage';
     OrderComponent,
     RegisterComponent,
     HomeComponent,
-    FileSizePipe
+    FileSizePipe,
+    HistoryOrderComponent
   ],
   imports: [
     BrowserModule,
