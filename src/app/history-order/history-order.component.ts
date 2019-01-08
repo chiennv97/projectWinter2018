@@ -4,6 +4,7 @@ import { AngularFireStorage, AngularFireUploadTask } from 'angularfire2/storage'
 import { Observable } from 'rxjs';
 import {FirebaseUserModel} from '../core/user.model';
 import {UserService} from '../core/user.service';
+import { Location } from '@angular/common';
 import {AuthService} from '../core/auth.service';
 @Component({
   selector: 'app-history-order',
@@ -18,7 +19,8 @@ export class HistoryOrderComponent implements OnInit {
     public db: AngularFireDatabase,
     public storage: AngularFireStorage,
     public userService: UserService,
-    public authService: AuthService
+    public authService: AuthService,
+    private location: Location,
   ) {
     this.userService.getCurrentUser()
       .then(res => {
