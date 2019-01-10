@@ -26,7 +26,7 @@
     </div>
   </nav>
 </header>
-<div style="padding-top: 100px; padding-bottom: 200px">
+<div style="padding-top: 100px; padding-bottom: 200px; color: black">
   <h4 style="text-align: center; padding: 20px">LỊCH SỬ ĐẶT HÀNG</h4>
   <table class="table" >
     <thead>
@@ -47,7 +47,7 @@
         <div>Tên file: {{item.name}}</div>
         <div>Số trang: {{item.page}}</div>
         <div>Số lượng bản in: {{item.numberOfPrint}}</div>
-        <div>Giá: {{item.page * item.price}}</div>
+        <div>Giá: {{item.page * item.price}} VNĐ</div>
       </td>
       <td>
         {{item.timeUpload | date: 'dd/MM/yyyy'}}
